@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
+//rj for Recipe Journal
 @Component({
-  selector: 'pm-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'rj-root',
+  template: `
+  <div><h1>{{pageTitle}}</h1>
+    <rj-recipes></rj-recipes>
+  </div>
+  `
 })
-export class AppComponent {
-  title = 'Angular: Getting Started';
+
+export class AppComponent{
+  pageTitle: string = "Recipe Journal";
 }
