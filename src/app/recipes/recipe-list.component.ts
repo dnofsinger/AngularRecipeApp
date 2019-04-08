@@ -1,17 +1,31 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { IRecipe } from './recipe'
 
 @Component({
     selector: 'rj-recipes',
-    templateUrl: './recipe-list.component.html'
+    templateUrl: './recipe-list.component.html',
+    styleUrls: ['./recipe-list.component.css']
 })
 
-export class RecipeListComponent{
+export class RecipeListComponent implements OnInit {
     pageTitle: string = 'Recipe List';
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
-    listFilter: string = 'recipe';
-    recipes: any[] = [
+
+    _listFilter: string = 'recipe';
+    get listFilter(): string {
+        return this._listFilter;
+    }
+
+    set listFilter(value: string) {
+        this._listFilter = value;
+        this.filteredRecipes = this.listFilter ? this.performFilter(this.listFilter) : this.recipes;
+    }
+
+
+    filteredRecipes: IRecipe[];
+    recipes: IRecipe[] = [
         {
             "recipeId": 1,
             "recipeName": "Spaghetti and Meatballs",
@@ -21,7 +35,7 @@ export class RecipeListComponent{
             "ingredients": "",
             "difficulty": 2.0,
             "starRating": 4.0,
-            "calories" : 500,
+            "calories": 500,
             "imageUrl": "https://openclipart.org/download/8673/johnny-automatic-spaghetti-and-meatballs.svg"
         },
         {
@@ -33,12 +47,27 @@ export class RecipeListComponent{
             "ingredients": "",
             "difficulty": 2.5,
             "starRating": 3.5,
-            "calories" : 500,
+            "calories": 500,
             "imageUrl": "https://openclipart.org/download/283405/Japanese-Rice-Bowl---Monochrome.svg"
         }
     ];
 
-    toggleImage(): void{
+    constructor(){
+        this.filteredRecipes = this.recipes;
+        this.listFilter = 'recipe';
+    }
+
+    performFilter(filterBy: string): IRecipe[] {
+        filterBy = filterBy.toLocaleLowerCase();
+        return this.recipes.filter((recipe: IRecipe) =>
+            recipe.recipeName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    }
+
+    toggleImage(): void {
         this.showImage = !this.showImage;
+    }
+
+    ngOnInit(): void {
+        console.log("In OnInit()...");
     }
 }
