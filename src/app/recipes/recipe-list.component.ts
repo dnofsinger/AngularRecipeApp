@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRecipe } from './recipe'
+import { RecipeService } from './recipe-service'
 
 @Component({
     selector: 'rj-recipes',
@@ -25,36 +26,10 @@ export class RecipeListComponent implements OnInit {
 
 
     filteredRecipes: IRecipe[];
-    recipes: IRecipe[] = [
-        {
-            'recipeId': 1,
-            'recipeName': 'Spaghetti and Meatballs',
-            'recipeTimePrepMin': 45,
-            'recipeLastTried': 'April 6th, 2019',
-            'description': 'Old family recipe for Spaghetti and Meatballs',
-            'ingredients': '',
-            'difficulty': 2.0,
-            'starRating': 4.0,
-            'calories': 500,
-            'imageUrl': 'https://openclipart.org/download/8673/johnny-automatic-spaghetti-and-meatballs.svg'
-        },
-        {
-            'recipeId': 2,
-            'recipeName': 'Fried Rice',
-            'recipeTimePrepMin': 60,
-            'recipeLastTried': 'March 15th, 2019',
-            'description': 'Restaurant Fried Rice',
-            'ingredients': '',
-            'difficulty': 2.5,
-            'starRating': 4.5,
-            'calories': 500,
-            'imageUrl': 'https://openclipart.org/download/283405/Japanese-Rice-Bowl---Monochrome.svg'
-        }
-    ];
+    recipes: IRecipe[] = [];
 
-    constructor(){
-        this.filteredRecipes = this.recipes;
-        this.listFilter = '';
+    constructor(private recipeService: RecipeService){
+        
     }
 
     onRatingClicked(message: string): void{
@@ -72,6 +47,7 @@ export class RecipeListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('In OnInit()...');
+        this.recipes = this.recipeService.getRecipes();
+        this.filteredRecipes = this.recipes;
     }
 }
