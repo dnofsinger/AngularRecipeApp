@@ -44,7 +44,7 @@
                         <td>{{recipe.recipeTimePrepMin}}</td>
                         <td>{{recipe.description}}</td>
                         <td>{{recipe.difficulty}}</td>
-                        <td>{{recipe.starRating}}</td>
+                        <td><rj-star [rating] = 'recipe.starRating'></rj-star></td>
                     </tr>
                 </tbody>
             </table>
