@@ -44,7 +44,8 @@
                         <td>{{recipe.recipeTimePrepMin}}</td>
                         <td>{{recipe.description}}</td>
                         <td>{{recipe.difficulty}}</td>
-                        <td><rj-star [rating] = 'recipe.starRating'></rj-star></td>
+                        <td><rj-star [rating] = 'recipe.starRating' 
+                            (ratingClicked)='onRatingClicked($event)'></rj-star></td>
                     </tr>
                 </tbody>
             </table>

@@ -57,6 +57,10 @@ export class RecipeListComponent implements OnInit {
         this.listFilter = '';
     }
 
+    onRatingClicked(message: string): void{
+        this.pageTitle = 'Recipe List: ' + message; 
+    }
+
     performFilter(filterBy: string): IRecipe[] {
         filterBy = filterBy.toLocaleLowerCase();
         return this.recipes.filter((recipe: IRecipe) =>
