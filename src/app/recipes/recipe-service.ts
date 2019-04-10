@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { IRecipe } from './recipe';
 
@@ -6,32 +9,31 @@ import { IRecipe } from './recipe';
     providedIn: 'root'
 })
 export class RecipeService{
-    getRecipes(): IRecipe[] {
-        return [
-            {
-                'recipeId': 1,
-                'recipeName': 'Spaghetti and Meatballs',
-                'recipeTimePrepMin': 45,
-                'recipeLastTried': 'April 6th, 2019',
-                'description': 'Old family recipe for Spaghetti and Meatballs',
-                'ingredients': '',
-                'difficulty': 2.0,
-                'starRating': 4.0,
-                'calories': 500,
-                'imageUrl': 'https://openclipart.org/download/8673/johnny-automatic-spaghetti-and-meatballs.svg'
-            },
-            {
-                'recipeId': 2,
-                'recipeName': 'Fried Rice',
-                'recipeTimePrepMin': 60,
-                'recipeLastTried': 'March 15th, 2019',
-                'description': 'Restaurant Fried Rice',
-                'ingredients': '',
-                'difficulty': 2.5,
-                'starRating': 4.5,
-                'calories': 500,
-                'imageUrl': 'https://openclipart.org/download/283405/Japanese-Rice-Bowl---Monochrome.svg'
-            }
-        ];
+
+    private recipeUrl = 'api/recipes/recipes.json';
+
+    constructor(private http: HttpClient){}
+
+    getRecipes(): Observable<IRecipe[]> {
+        return this.http.get<IRecipe[]>(this.recipeUrl).pipe(
+            tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError(this.handleError)
+        );
+    }
+
+    private handleError(err: HttpErrorResponse){
+
+        let errorMessage = '';
+
+        if(err.error instanceof ErrorEvent){
+            errorMessage = `An error occured: ${err.error.message}`;
+        }else{
+            errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+        }
+
+        console.error(errorMessage);
+
+        return throwError(errorMessage);
+
     }
 }

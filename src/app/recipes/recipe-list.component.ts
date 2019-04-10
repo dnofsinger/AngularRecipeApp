@@ -13,6 +13,7 @@ export class RecipeListComponent implements OnInit {
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
+    errorMessage: string;
 
     _listFilter: string = 'recipe';
     get listFilter(): string {
@@ -47,7 +48,13 @@ export class RecipeListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.recipes = this.recipeService.getRecipes();
-        this.filteredRecipes = this.recipes;
+        this.recipeService.getRecipes().subscribe(
+            recipes => {
+                this.recipes = recipes;
+                this.filteredRecipes = this.recipes;
+            },
+            error => this.errorMessage = <any>error
+        );
+        
     }
 }
