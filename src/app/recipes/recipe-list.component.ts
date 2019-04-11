@@ -3,7 +3,6 @@ import { IRecipe } from './recipe'
 import { RecipeService } from './recipe-service'
 
 @Component({
-    selector: 'rj-recipes',
     templateUrl: './recipe-list.component.html',
     styleUrls: ['./recipe-list.component.css']
 })
