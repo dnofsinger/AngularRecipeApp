@@ -10,6 +10,7 @@ import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 import { StarComponent } from './shared/star.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
+import { RecipeDetailGuard } from './recipes/recipe-detail.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { WelcomeComponent } from './home/welcome.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'recipes', component: RecipeListComponent },
-      { path: 'recipes/id', component: RecipeDetailComponent },
+      { path: 'recipes/:id',
+        canActivate: [RecipeDetailGuard],
+        component: RecipeDetailComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
