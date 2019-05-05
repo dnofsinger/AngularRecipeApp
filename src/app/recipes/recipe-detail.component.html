@@ -2,6 +2,11 @@
   <div class='card-header'>
     {{pageTitle + ': ' + recipe.recipeName}}
   </div>
+  <div id="ingredientsInfo">
+    <p>Recipe Details will go here.</p>
+    <p><b>Recipe:</b> {{recipe.recipeName}}</p>
+    <p><b>Preparation Time:</b> {{recipe.recipeTimePrepMin}} Minutes</p>
+  </div>
   <div class = 'card-footer'>
     <button class = 'btn btn-outline-secondary'
             (click)='onBack()'

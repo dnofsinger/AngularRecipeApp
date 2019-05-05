@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { IRecipe } from './recipe';
+import { INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS } from '@angular/platform-browser-dynamic/src/platform_providers';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,12 @@ export class RecipeService{
             catchError(this.handleError)
         );
     }
+
+    getRecipe(id: number): Observable<IRecipe | undefined> {
+        return this.getRecipes().pipe(
+          map((recipes: IRecipe[]) => recipes.find(r => r.recipeId === id))
+        );
+      }
 
     private handleError(err: HttpErrorResponse){
 
